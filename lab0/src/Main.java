@@ -1,39 +1,76 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import Car.Car;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 public class Main {
+
     public static void main(String[] args) {
-        Main main = new Main();
-        main.run();
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        String formattedDate = currentDate.format(formatter);
-        System.out.println(formattedDate);
+        Car[] cars = createCars();
+
+        String model = "Toyota";
+        Car[] carsByModel = getCarsByModel(cars, model);
+        System.out.println("Список автомобілів моделі " + model + ":");
+        printCarsArray(carsByModel);
+
+        int yearsInUse = 3;
+        Car[] carsByModelAndYears = getCarsByModelAndYears(cars, model, yearsInUse);
+        System.out.println("Список автомобілів моделі " + model + ", які експлуатуються більше " + yearsInUse + " років:");
+        printCarsArray(carsByModelAndYears);
+
+        int year = 2015;
+        int price = 5000;
+        List<Car> carsList = new ArrayList<>(Arrays.asList(cars));
+        List<Car> carsByYearAndPrice = getCarsByYearAndPrice(carsList, year, price);
+        System.out.println("Список автомобілів року випуску " + year + ", ціна яких більше " + price + ":");
+        printCarsList(carsByYearAndPrice);
     }
-    private double calcA(double x, double y, double z) {
-        return (2*Math.cos(x-3.14/6))/(1/2+Math.pow(Math.sin(y),2));
+    public static Car[] createCars() {
+        Car[] cars = new Car[5];
+        cars[0] = new Car(1, "Toyota", 2010, 7000, "BO4444АХ");
+        cars[1] = new Car(2, "Mercedes-Benz", 2015, 7000, "BO1111АХ");
+        cars[2] = new Car(3, "BMW", 2010, 8000, "BO3333АХ");
+        cars[3] = new Car(4, "Toyota", 2013, 9000, "BO5555АХ");
+        cars[4] = new Car(5, "Volkswagen", 2010, 6000, "BO7777АХ");
+        return cars;
     }
-    private double calcB(double x, double y, double z) {
-        return 1+(Math.pow(z,2)/(3+Math.pow(z,2)/5));
+    public static void printCarsArray(Car[] cars) {
+        for (Car car : cars) {
+            System.out.println(car.toString());
+        }
     }
-    private void run() {
-        System.out.println("Введіть число x=");
-        Scanner s = new Scanner(System.in);
-        double x = s.nextDouble();
-        System.out.println("Введіть число y=");
-        double y = s.nextDouble();
-        System.out.println("Введіть число z=");
-        double z = s.nextDouble();
-        double a = calcA(x, y, z);
-        double b = calcB(x, y, z);
-        print(x, y, z, a, b);
+    public static Car[] getCarsByModel(Car[] cars, String model) {
+        Car[] result = new Car[0];
+        for (Car car : cars) {
+            if (car.getModel().equals(model)) {
+                result = Arrays.copyOf(result, result.length + 1);
+                result[result.length - 1] = car;
+            }
+        }
+        return result;
     }
-    private void print(double x, double y, double z, double a, double b) {
-        System.out.println("x=" + x);
-        System.out.println("y=" + y);
-        System.out.println("z=" + z);
-        System.out.println("a=" + a);
-        System.out.println("b=" + b);
-        System.out.println("============");
+    public static Car[] getCarsByModelAndYears(Car[] cars, String model, int n) {
+        Car[] result = new Car[0];
+        for (Car car : cars) {
+            if (car.getModel().equals(model) && (2023 - car.getYear()) > n) {
+                result = Arrays.copyOf(result, result.length + 1);
+                result[result.length - 1] = car;
+            }
+        }
+        return result;
+    }
+    public static List<Car> getCarsByYearAndPrice(List<Car> cars, int year, double minPrice) {
+        List<Car> result = new ArrayList<>();
+        for (Car car : cars) {
+            if (car.getYear() == year && car.getPrice() > minPrice) {
+                result.add(car);
+            }
+        }
+        return result;
+    }
+    public static void printCarsList(List<Car> cars) {
+        for (Car car : cars) {
+            System.out.println(car.toString());
+        }
     }
 }
+
