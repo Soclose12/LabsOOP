@@ -1,7 +1,7 @@
-import Car.Car;
-import java.util.ArrayList;
+import car.Car;
+
 import java.util.Arrays;
-import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -17,12 +17,12 @@ public class Main {
         System.out.println("Список автомобілів моделі " + model + ", які експлуатуються більше " + yearsInUse + " років:");
         printCarsArray(carsByModelAndYears);
 
-        int year = 2015;
-        int price = 5000;
-        List<Car> carsList = new ArrayList<>(Arrays.asList(cars));
-        List<Car> carsByYearAndPrice = getCarsByYearAndPrice(carsList, year, price);
+        int year =2015;
+        int price= 5000;
+        Car[] carsByPricelAndYears = getCarsByYearAndPrice(cars, year, price);
         System.out.println("Список автомобілів року випуску " + year + ", ціна яких більше " + price + ":");
-        printCarsList(carsByYearAndPrice);
+        printCarsArray(carsByPricelAndYears);
+
     }
     public static Car[] createCars() {
         Car[] cars = new Car[5];
@@ -58,19 +58,16 @@ public class Main {
         }
         return result;
     }
-    public static List<Car> getCarsByYearAndPrice(List<Car> cars, int year, double minPrice) {
-        List<Car> result = new ArrayList<>();
+    public static Car[] getCarsByYearAndPrice(Car[] cars, int year, double minPrice) {
+        Car[] result = new Car[0];
         for (Car car : cars) {
             if (car.getYear() == year && car.getPrice() > minPrice) {
-                result.add(car);
+                result = Arrays.copyOf(result, result.length + 1);
+                result[result.length - 1] = car;
             }
         }
         return result;
-    }
-    public static void printCarsList(List<Car> cars) {
-        for (Car car : cars) {
-            System.out.println(car.toString());
-        }
-    }
-}
 
+        }
+
+    }
