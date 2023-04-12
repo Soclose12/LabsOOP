@@ -1,13 +1,14 @@
 package car;
 
-public class SportCar extends Car{
+public class SportCar extends Car {
 
     public int maxSpeed;
     public int dors;
-    public SportCar(int id,String model,int year,double price,String registrationNumber){
+
+    public SportCar(int id, String model, int year, double price, String registrationNumber, int dors, int maxSpeed) {
         super(id, model, year, price, registrationNumber);
-        this.maxSpeed= maxSpeed;
-        this.dors=dors;
+        this.dors = dors;
+        this.maxSpeed = maxSpeed;
     }
 
     public int getMaxSpeed() {
@@ -29,7 +30,7 @@ public class SportCar extends Car{
     @Override
     public String toString() {
         return "SportCar{" +
-                "maxSpeed=" + maxSpeed +
+                "maxSpeed(kmh)=" + maxSpeed +
                 ", dors=" + dors +
                 '}';
     }
